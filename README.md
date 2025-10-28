@@ -41,8 +41,8 @@ const uint8_t LED_VERDE    = 13;
 const uint8_t LED_AMARELO  = 12;
 const uint8_t LED_VERMELHO = 11;
 
-const unsigned long T_VERDE    = 2000UL;
-const unsigned long T_AMARELO  = 4000UL;
+const unsigned long T_VERDE    = 4000UL;
+const unsigned long T_AMARELO  = 2000UL;
 const unsigned long T_VERMELHO = 6000UL;
 
 enum Fase : uint8_t { VERDE = 0, AMARELO = 1, VERMELHO = 2, AMARELO_POS = 3 };
@@ -141,8 +141,8 @@ Media final : 9.75
 
 ## Lógica de Funcionamento
 
-1. **Fase Verde**: LED verde acende por 2 segundos, liberando o trânsito.
-2. **Fase Amarela**: LED amarelo acende por 4 segundos, alertando sobre a transição.
+1. **Fase Verde**: LED verde acende por 4 segundos, liberando o trânsito.
+2. **Fase Amarela**: LED amarelo acende por 2 segundos, alertando sobre a transição.
 3. **Fase Vermelha**: LED vermelho acende por 6 segundos, indicando parada.
 4. O ciclo reinicia continuamente.
 
