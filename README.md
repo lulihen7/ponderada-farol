@@ -141,9 +141,9 @@ Media final : 9.75
 
 ## Lógica de Funcionamento
 
-1. **Fase Verde**: LED verde acende por 5 segundos, liberando o trânsito.
-2. **Fase Amarela**: LED amarelo acende por 2 segundos, alertando sobre a transição.
-3. **Fase Vermelha**: LED vermelho acende por 5 segundos, indicando parada.
+1. **Fase Verde**: LED verde acende por 2 segundos, liberando o trânsito.
+2. **Fase Amarela**: LED amarelo acende por 4 segundos, alertando sobre a transição.
+3. **Fase Vermelha**: LED vermelho acende por 6 segundos, indicando parada.
 4. O ciclo reinicia continuamente.
 
 > A utilização de `millis()` permite que o sistema seja **não bloqueante**, possibilitando futuras expansões como sensores e botões de pedestres sem interferir no tempo do semáforo.
