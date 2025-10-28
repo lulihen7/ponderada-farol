@@ -37,20 +37,15 @@ Cada LED foi conectado a um pino digital do Arduino e ao GND com resistores para
 ## Código da Programação (com `millis()`)
 
 ```cpp
-// ==========================
-// Projeto: Semáforo Arduino (non-blocking)
-// Autor: Henrique Rodrigues Diniz
-// ==========================
+const uint8_t LED_VERDE    = 13;
+const uint8_t LED_AMARELO  = 12;
+const uint8_t LED_VERMELHO = 11;
 
-const uint8_t LED_VERDE    = 2;
-const uint8_t LED_AMARELO  = 3;
-const uint8_t LED_VERMELHO = 4;
+const unsigned long T_VERDE    = 2000UL;
+const unsigned long T_AMARELO  = 4000UL;
+const unsigned long T_VERMELHO = 6000UL;
 
-const unsigned long T_VERDE    = 5000UL;
-const unsigned long T_AMARELO  = 2000UL;
-const unsigned long T_VERMELHO = 5000UL;
-
-enum Fase : uint8_t { VERDE = 0, AMARELO = 1, VERMELHO = 2 };
+enum Fase : uint8_t { VERDE = 0, AMARELO = 1, VERMELHO = 2, AMARELO_POS = 3 };
 
 Fase faseAtual = VERDE;
 unsigned long instanteMudanca = 0;
@@ -72,21 +67,31 @@ void aplicaFase(Fase f) {
       digitalWrite(LED_AMARELO, LOW);
       digitalWrite(LED_VERMELHO, HIGH);
       break;
+    case AMARELO_POS:
+      digitalWrite(LED_VERDE, LOW);
+      digitalWrite(LED_AMARELO, HIGH);
+      digitalWrite(LED_VERMELHO, LOW);
+      break;
   }
 }
 
 unsigned long duracaoDaFase(Fase f) {
   switch (f) {
-    case VERDE:    return T_VERDE;
-    case AMARELO:  return T_AMARELO;
-    case VERMELHO: return T_VERMELHO;
+    case VERDE:       return T_VERDE;
+    case AMARELO:     return T_AMARELO;
+    case VERMELHO:    return T_VERMELHO;
+    case AMARELO_POS: return T_AMARELO;
   }
   return 0;
 }
 
 Fase proximaFase(Fase f) {
-  if (f == VERDE)   return AMARELO;
-  if (f == AMARELO) return VERMELHO;
+  switch (f) {
+    case VERDE:       return AMARELO;
+    case AMARELO:     return VERMELHO;
+    case VERMELHO:    return AMARELO_POS;
+    case AMARELO_POS: return VERDE;
+  }
   return VERDE;
 }
 
@@ -114,6 +119,7 @@ void loop() {
   // - Sensores de presença
   // - Comunicação serial
 }
+
 ```
 
 
