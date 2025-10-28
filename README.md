@@ -2,43 +2,88 @@
 
 ## Codigo
 
-// Definição dos pinos dos LEDs
-const int ledVerde = 13;
-const int ledAmarelo = 12;
-const int ledVermelho = 11;
+// Pinos dos LEDs
+const uint8_t LED_VERDE    = 13;
+const uint8_t LED_AMARELO  = 12;
+const uint8_t LED_VERMELHO = 11;
 
-// Definição dos tempos (em milissegundos)
-const int tempoVerde = 5000;   // 5 segundos
-const int tempoAmarelo = 2000; // 2 segundos
-const int tempoVermelho = 5000; // 5 segundos
+// Tempos de cada fase (em milissegundos)
+const unsigned long T_VERDE    = 5000UL;  // 5 s
+const unsigned long T_AMARELO  = 2000UL;  // 2 s
+const unsigned long T_VERMELHO = 5000UL;  // 5 s
+
+// Fases do semáforo
+enum Fase : uint8_t { VERDE = 0, AMARELO = 1, VERMELHO = 2 };
+
+// Estado atual e controle de tempo
+Fase faseAtual = VERDE;
+unsigned long instanteMudanca = 0;
+
+// Utilitário: aplica a fase aos LEDs
+void aplicaFase(Fase f) {
+  switch (f) {
+    case VERDE:
+      digitalWrite(LED_VERDE,    HIGH);
+      digitalWrite(LED_AMARELO,  LOW);
+      digitalWrite(LED_VERMELHO, LOW);
+      break;
+    case AMARELO:
+      digitalWrite(LED_VERDE,    LOW);
+      digitalWrite(LED_AMARELO,  HIGH);
+      digitalWrite(LED_VERMELHO, LOW);
+      break;
+    case VERMELHO:
+      digitalWrite(LED_VERDE,    LOW);
+      digitalWrite(LED_AMARELO,  LOW);
+      digitalWrite(LED_VERMELHO, HIGH);
+      break;
+  }
+}
+
+// Retorna a duração da fase atual
+unsigned long duracaoDaFase(Fase f) {
+  switch (f) {
+    case VERDE:    return T_VERDE;
+    case AMARELO:  return T_AMARELO;
+    case VERMELHO: return T_VERMELHO;
+  }
+  return 0;
+}
+
+// Avança ciclicamente para a próxima fase
+Fase proximaFase(Fase f) {
+  if (f == VERDE)   return AMARELO;
+  if (f == AMARELO) return VERMELHO;
+  return VERDE;
+}
 
 void setup() {
-  // Configura os pinos como saída
-  pinMode(ledVerde, OUTPUT);
-  pinMode(ledAmarelo, OUTPUT);
-  pinMode(ledVermelho, OUTPUT);
+  pinMode(LED_VERDE,    OUTPUT);
+  pinMode(LED_AMARELO,  OUTPUT);
+  pinMode(LED_VERMELHO, OUTPUT);
+
+  // Inicializa na fase VERDE
+  aplicaFase(faseAtual);
+  instanteMudanca = millis();
 }
 
 void loop() {
-  // Verde aceso
-  digitalWrite(ledVerde, HIGH);
-  digitalWrite(ledAmarelo, LOW);
-  digitalWrite(ledVermelho, LOW);
-  delay(tempoVerde);
+  // Controle de tempo sem bloqueio (tolerante a overflow de millis)
+  unsigned long agora = millis();
+  unsigned long elapsed = agora - instanteMudanca; // cálculo seguro para overflow
 
-  // Amarelo aceso
-  digitalWrite(ledVerde, LOW);
-  digitalWrite(ledAmarelo, HIGH);
-  digitalWrite(ledVermelho, LOW);
-  delay(tempoAmarelo);
+  if (elapsed >= duracaoDaFase(faseAtual)) {
+    // Próxima fase
+    faseAtual = proximaFase(faseAtual);
+    aplicaFase(faseAtual);
+    instanteMudanca = agora; // reinicia cronômetro
+  }
 
-  // Vermelho aceso
-  digitalWrite(ledVerde, LOW);
-  digitalWrite(ledAmarelo, LOW);
-  digitalWrite(ledVermelho, HIGH);
-  delay(tempoVermelho);
+  // Espaço para futuras extensões sem travar o loop:
+  // - Leitura de botões (pedestre)
+  // - Sensores (LDR, ultrassom, etc.)
+  // - Telemetria via Serial
 }
-
 
 ## Documentacao
 
