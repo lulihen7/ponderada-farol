@@ -116,7 +116,11 @@ void loop() {
 }
 ```
 
----
+
+## Link do video
+
+https://youtube.com/shorts/q65U_h5NXRo?si=TV_BtZ77Wz-473to
+
 
 ## Lógica de Funcionamento
 
