@@ -127,6 +127,17 @@ void loop() {
 
 https://youtube.com/shorts/q65U_h5NXRo?si=TV_BtZ77Wz-473to
 
+## Tabela de avaliacao
+
+| Critério                                                                                                            | Pontos Máximos | Avaliador 1 (Reimar Filho) | Avaliador 2 (Diego Figueiredo Silva) | Observações                                  |
+| ------------------------------------------------------------------------------------------------------------------- | -------------: | -------------------: | -----------------------------------: | -------------------------------------------- |
+| Montagem física com cores corretas, boa disposição dos fios e uso adequado de resistores                            |              3 |                    3 |                                    3 | Montagem bem organizada e com cores corretas |
+| Temporização adequada conforme tempos medidos com auxílio de algum instrumento externo                              |              3 |                    3 |                                    3 | Temporização correta                         |
+| Código implementa corretamente as fases do semáforo e estrutura do código (variáveis representativas e comentários) |              3 |                    3 |                                    3 | Código implementado corretamente             |
+| Ir além: Implementou um componente extra, fez com `millis()` ao invés de `delay()` e/ou usou ponteiros no código    |              1 |                  0,5 |                                    1 | Utilizou `millis()` e implementou melhorias  |
+| **Pontuação Total**                                                                                                 |         **10** |              **9,5** |                               **10** |                                              |
+
+Media final : 9.75
 
 ## Lógica de Funcionamento
 
